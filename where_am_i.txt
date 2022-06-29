@@ -1,0 +1,36 @@
+
+brew install --cask temurin
+
+
+brew tap homebrew/cask-versions
+
+brew install --cask temurin11
+
+
+brew tap spring-io/tap
+brew install spring-boot
+
+# install odo
+spring init --dependencies=web,data-jpa my-project
+
+spring init \
+ --dependencies=mysql,lombok,webflux,oauth2-client,data-r2dbc \
+ --build=maven \
+ --java-version=17 \
+ --platformVersion=3.0.0-M3 \
+ --language=java \
+ --packaging=jar \
+ --package-name=dvn.api
+https://start.spring.io/#!type=gradle-project&language=java&platformVersion=3.0.0-M3&packaging=jar&jvmVersion=17&groupId=dvn&artifactId=sb&name=demo&description=odo-sboot-podman&packageName=dvn.api&dependencies=mysql,lombok,webflux,oauth2-client,data-r2dbc
+
+
+https://start.spring.io/#!type=gradle-project&language=java&platformVersion=3.0.0-M3&packaging=jar&jvmVersion=17&groupId=dvn&artifactId=sb&name=demo&description=odo-sboot-podman&
+
+
+mvn spring-boot:build-image -DskipTests -Dspring-boot.build-image.imageName=localhost/myteam/sboot-mysql:0.0.1-SNAPSHOT
+
+
+#export IMAGE_PATH=registry.hub.docker.com/baeldungjib/spring-jib-app
+mvn compile jib:build
+
+mvn jib:dockerBuild -Djib.dockerClient.executable=$(which podman)

@@ -1,0 +1,1 @@
+mvn jib:dockerBuild -Djib.dockerClient.executable=$(which podman)

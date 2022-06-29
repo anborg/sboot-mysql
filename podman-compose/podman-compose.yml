@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  app:
+    image: myteam/sb-mysql
+    environment:
+      - DATABSE_URL="r2dbc:mariadb://db:3306/mydb1"
+      - DB_USER=user
+      - DB_PASS=pass
+    ports:
+      - '8080:8080'
+
+  db:
+    image: registry.redhat.io/rhel8/mariadb-105
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+      - MYSQL_DATABASE=mydb1
+#      - MYSQL_ROOT_PASSWORD=mauFJcuf5dhRMQrjj
+    ports:
+      - '3306:3306'
+    volumes:
+      - db:/var/lib/mysql
+#      - db/init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  db:
+    driver: local
+    driver_opts:
+      device: ./db

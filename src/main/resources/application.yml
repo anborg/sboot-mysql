@@ -1,0 +1,23 @@
+spring:
+  r2dbc:
+#    url: r2dbc:mariadb://127.0.0.1:3306/mydb1
+#    url: r2dbc:mariadb://db:3306/mydb1
+    url: ${DATABSE_URL}
+    #    url: r2dbc:postgresql://localhost:5432/mydb1
+    username: ${DB_USER}
+    password: ${DB_PASS}
+  jackson:
+    serialization:
+      indent_output: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  sql:
+    init:
+      mode: always
+      platform: mariadb
+logging:
+  level:
+    org:
+      springframework:
+        r2dbc: DEBUG
